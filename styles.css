@@ -120,6 +120,7 @@ body{
   margin-top: 50px;
   margin-left: 25px;
   text-transform: capitalize;
+  font-weight: 600;
 }
 
 .pokemon-stats .stat-elem {
@@ -135,7 +136,7 @@ body{
 
 .pokemon-stats .stat-elem .stat-name{
   margin-top: 35px;
-  color: gray;
+  color: rgb(254, 0, 0);
   font-size: 14px;
 }
 
@@ -181,5 +182,9 @@ body{
 
   .container {
     left: 50%;
+  }
+
+  .container .info-box{
+    background-color: rgba(244, 244, 244, 0.4);
   }
 }
