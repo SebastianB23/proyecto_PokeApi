@@ -1,0 +1,101 @@
+    body {
+
+      background-color: #3EECAC;
+      background-image: linear-gradient(19deg, #3EECAC 0%, #EE74E1 100%);
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, cursive;
+      color: white;
+      height: 100vh;
+    }
+
+    main {
+      margin: 20px auto;
+    }
+
+    h1 {
+      margin-top: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .game {
+      display: grid;
+      grid-template-columns: repeat(5, auto);
+      grid-column-gap: 2px;
+    }
+    .grid {
+      margin-top: 5px;
+      display: grid;
+      grid-template-columns: repeat(6, 120px);
+      grid-gap: 7px;
+      justify-content: center;
+    }
+
+    .card {
+      width: 120px;
+      height: 120px;
+      background-color: #2c70eee0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 50px;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .flipped {
+      background-color: rgb(229, 23, 164);
+    }
+    
+    .matched {
+      background-color: #0f0;
+      cursor: default;
+    }
+
+
+    .indicativos {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      margin-bottom: 30px;
+      gap: 20px;
+    }
+
+    .indicativos button {
+      width: 175px;
+      height: 55px;
+      background-color: mediumorchid;
+      color: #fff;
+      border: #fff;
+      font-size: 20px;
+      border-radius: 7px;
+      padding: 5px 5px;
+      cursor: pointer;
+    }
+
+  .alertas {
+    display: flex;
+    justify-content: center;
+  }
+
+    #alertaRoja p {
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    border: 1px solid red;
+    padding: 10px; 
+    }
+
+    #alertaVerde p {
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: green;
+    border: 1px solid green;;
+    padding: 10px; 
+    }
