@@ -10,13 +10,14 @@
 }
 
 body{
-  background: #add8e6;
+  background-image: url(./background.jpg);
+  background-size: cover;
 }
 
 .container {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 25%;
   transform: translate(-50%, -50%);
   padding: 20px;
 
@@ -51,6 +52,7 @@ body{
   border-radius: 7px;
   overflow: hidden;
   padding: 10px;
+  width: 350px;
 }
 
 .container .info-box .color-box{
@@ -116,7 +118,7 @@ body{
 .container .info-box .pokemon-stats {
   height: 150px;
   margin-top: 50px;
-  margin-left: 30px;
+  margin-left: 25px;
   text-transform: capitalize;
 }
 
@@ -149,4 +151,35 @@ body{
 .stat-elem:nth-child(5) .stat-name{
   font-size: 12px;
   text-align: center;
+}
+
+.navigation-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 20px;
+}
+
+.navigation-buttons button {
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 5px;
+  transition: background 0.3s ease;
+}
+
+@media (max-width: 800px) {
+
+  body {
+  background-image: url(./background-mobile.jpg);
+  background-size: cover;
+  }
+
+  .container {
+    left: 50%;
+  }
 }

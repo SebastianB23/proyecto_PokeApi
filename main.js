@@ -5,6 +5,10 @@ let pokemonId = document.querySelector(".container .info-box .color-box .pokemon
 let pokeTypeBox = document.querySelector(".container .info-box .pokemon-types");
 let colorBox = document.querySelector(".container .info-box .color-box");
 let pokeStatsBox = document.querySelector(".container .info-box .pokemon-stats");
+let prevButton = document.querySelector("#prev-pokemon");
+let nextButton = document.querySelector("#next-pokemon");
+
+let currentPokemonId = 1;  // Almacenamos el ID actual del Pokémon
 
 const typeColor = {
     bug: "#26de81",
@@ -13,7 +17,7 @@ const typeColor = {
     fairy: "#FF0069",
     fighting: "#30336b",
     fire: "#f0932b",
-    flying: "#81ecec",
+    flying: "#17d4d4",
     grass: "#00b894",
     ground: "#EFB549",
     ghost: "#a55eea",
@@ -25,6 +29,43 @@ const typeColor = {
     water: "#0190FF",
 }
 
+let getPokemonById = (id) => {
+    if (id > 0) {  // Evitar que ID sea menor a 1
+        let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+        fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+                renderPokemons(data);
+                currentPokemonId = data.id;  // Actualizar el ID actual al que estamos mostrando
+            })
+            .catch((error) => {
+                console.error("Error al obtener el Pokémon", error);
+            });
+    }
+};
+
+prevButton.addEventListener("click", () => {
+    if (currentPokemonId > 1) {  // Solo permitir retroceder si no estamos en el primer Pokémon
+        getPokemonById(currentPokemonId - 1);
+    }
+});
+
+nextButton.addEventListener("click", () => {
+    getPokemonById(currentPokemonId + 1);  // Avanzar al siguiente Pokémon
+});
+
+// Función para aplicar estilos a la tarjeta y a los botones de navegación
+
+let styleCard = (color) => {
+    colorBox.style.background = color;
+    pokeTypeBox.querySelectorAll("span").forEach(typeColor => typeColor.style.background = color);
+
+    // Aplicar el mismo color al fondo de los botones de navegación
+    prevButton.style.background = color;
+    nextButton.style.background = color;
+};
+
+// Función existente para obtener Pokémon por nombre o ID desde el input
 let getPokemon = (pokemon) => {
     if (typeof pokemon === "string") {
         let url = `https://pokeapi.co/api/v2/pokemon/${pokemon.toLowerCase()}`;
@@ -32,13 +73,11 @@ let getPokemon = (pokemon) => {
             .then((res) => res.json())
             .then((data) => {
                 renderPokemons(data);
-                // Limpiar el campo de entrada después de la búsqueda
-                input.value = "";
+                currentPokemonId = data.id;  // Actualizar el ID al que acabamos de buscar
+                input.value = "";  // Limpiar el campo de entrada
             })
             .catch((error) => {
                 console.error(error);
-                // Limpiar el campo incluso si hay un error
-                input.value = "";
             });
     }
 };
@@ -70,11 +109,6 @@ let getPokemonTypes = (types) => {
         span.classList.add("types-style");
     });
 };
-
-let styleCard = (color) => {
-    colorBox.style.background = color;
-    pokeTypeBox.querySelectorAll("span").forEach(typeColor => typeColor.style.background = color);
-}
 
 let getPokemonStats = (stats) => {
     pokeStatsBox.innerHTML = "";
