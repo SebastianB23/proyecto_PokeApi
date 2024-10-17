@@ -19,6 +19,7 @@ body{
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 20px;
+
 }
 
 .container .search-space {
@@ -31,8 +32,9 @@ body{
 }
 
 .container .search-space i {
-  color: gray;
+  color: rgb(0, 0, 0);
   font-size: 14px;
+  font-weight: 600;
 }
 
 .container .search-space input {
@@ -49,7 +51,6 @@ body{
   border-radius: 7px;
   overflow: hidden;
   padding: 10px;
-  height: 350px;
 }
 
 .container .info-box .color-box{
@@ -77,7 +78,8 @@ body{
   top: 85px;
   right: 35px;
   color: #000;
-  font-size: 14px;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .container .info-box .pokemon-name {
@@ -106,5 +108,45 @@ body{
  position: relative;
  top: 10px;
  left: -15px;
- font-size: 14px;
+ font-size: 18px;
+ font-style: italic;
+ 
+}
+
+.container .info-box .pokemon-stats {
+  height: 150px;
+  margin-top: 50px;
+  margin-left: 30px;
+  text-transform: capitalize;
+}
+
+.pokemon-stats .stat-elem {
+  height: 65px;
+  width: 70px;
+  margin-left: 25px;
+  float: left;
+  position: relative;
+  left: -15px;
+  display: flex;
+  justify-content: center;
+}
+
+.pokemon-stats .stat-elem .stat-name{
+  margin-top: 35px;
+  color: gray;
+  font-size: 14px;
+}
+
+.pokemon-stats .stat-elem .stat-value{
+  position: absolute;
+  margin-top: 10px;
+  white-space: nowrap;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.stat-elem:nth-child(4) .stat-name,
+.stat-elem:nth-child(5) .stat-name{
+  font-size: 12px;
+  text-align: center;
 }
