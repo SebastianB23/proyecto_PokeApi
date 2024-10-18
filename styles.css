@@ -173,7 +173,7 @@ body{
   transition: background 0.3s ease;
 }
 
-@media (min-width: 500px) and (max-width: 800px) {
+@media (min-width: 500px) and (max-width: 932px) {
   
   body {
     background-image: url(./background-mobile.jpg);
