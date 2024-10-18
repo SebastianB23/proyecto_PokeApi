@@ -173,8 +173,8 @@ body{
   transition: background 0.3s ease;
 }
 
-@media (max-width: 800px) {
-
+@media (min-width: 600px) and (max-width: 800px) {
+  
   body {
   background-image: url(./background-mobile.jpg);
   background-size: cover;
@@ -187,4 +187,12 @@ body{
   .container .info-box{
     background-color: rgba(244, 244, 244, 0.4);
   }
+
+  
+    .toastify {
+        font-size: 14px !important;   /* Reducir el tamaño del texto */
+        width: 90% !important;        /* Hacer la notificación más estrecha */
+        max-width: 300px !important;  /* Limitar el ancho máximo */
+    }
+
 }

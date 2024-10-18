@@ -70,13 +70,34 @@ let getPokemon = (pokemon) => {
     if (typeof pokemon === "string") {
         let url = `https://pokeapi.co/api/v2/pokemon/${pokemon.toLowerCase()}`;
         fetch(url)
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) {
+                    // Si la respuesta no es exitosa, lanzar un error para manejarlo en el catch
+                    throw new Error("Pokemon no encontrado");
+                }
+                return res.json();
+            })
             .then((data) => {
                 renderPokemons(data);
                 currentPokemonId = data.id;  // Actualizar el ID al que acabamos de buscar
                 input.value = "";  // Limpiar el campo de entrada
             })
             .catch((error) => {
+                // Mostrar el mensaje Toastify cuando el Pokémon no se encuentra
+                Toastify({
+                    text: "Pokemon no encontrado, asegúrate que su nombre esté bien escrito.",
+                    duration: 5000,
+                    newWindow: true,
+                    close: false,
+                    gravity: "top", // `top` or `bottom`
+                    position: "center", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    className: "toastify", // Clase personalizada
+                    style: {
+                        background: "linear-gradient(to right, #ff5f6d, #ffc371)",  // Gradiente rojo
+                    },
+                    onClick: function(){} // Callback after click
+                }).showToast();
                 console.error(error);
             });
     }
@@ -137,6 +158,5 @@ input.addEventListener("keyup", (e) => {
         getPokemon(input.value);
     }
 });
-
 
 getPokemon(input.value);
