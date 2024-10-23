@@ -3,12 +3,13 @@
 document.getElementById('search-link').addEventListener('click', function() {
     document.getElementById('search-section').style.display = 'inline-block';
     document.getElementById('list-section').style.display = 'none';
+    document.getElementById('most-searched-section').style.display = 'none';
     getPokemonById(1);  // Cargar el primer Pokémon automáticamente
 });
 
 document.getElementById('list-link').addEventListener('click', function() {
     document.getElementById('search-section').style.display = 'none';
-    document.getElementById('list-section').style.display = 'inline-block';
+    document.getElementById('list-section').style.display = 'block';
     document.getElementById('most-searched-section').style.display = 'none';
 });
 
@@ -200,14 +201,12 @@ const renderPokemonPage = async (page = 1) => {
     nextPageBtn.disabled = page === Math.ceil(totalPokemons / pokemonPerPage);
 };
 
-// ----- FUNCIONES AUXILIARES -----
 
-// Capitalizar primera letra
 let capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-// Aplicar estilos a la tarjeta
+
 let styleCard = (color) => {
     colorBox.style.background = color;
     pokeTypeBox.querySelectorAll("span").forEach(typeColor => typeColor.style.background = color);
