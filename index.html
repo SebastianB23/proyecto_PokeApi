@@ -10,27 +10,53 @@
   <title>Proyecto Final JS</title>
 </head>
 <body>
-  <div class="container">
-      <div class="search-space">
+  
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#" id="search-link">Buscar Pokémon</a></li>
+            <li><a href="#" id="list-link">Ver Todos los Pokémon</a></li>
+            <li><a href="#" id="most-searched-link">Más buscados</a></li>
+        </ul>
+    </nav>
+</header>
+
+  <!-- Sección de búsqueda (oculta al cargar la página) -->
+  <div class="container" id="search-section" style="display:none;">
+    <div class="search-space">
         <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-        <input type="text" placeholder="Nombre del pokemon" value="Bulbasaur">
-      </div>
-      <div class="info-box">
+        <input type="text" placeholder="Nombre del Pokémon" value="">
+    </div>
+    <div class="info-box">
         <div class="color-box">
-          <div class="pokemon-id">#1</div>
+            <div class="pokemon-id"></div>
         </div>
-          <img src="Bulbasaur.svg" alt="">
-          <h3 class="pokemon-name">Bulbasaur</h3>
-          <div class="pokemon-types">
-          </div>
-          <div class="pokemon-stats">
-          </div>
-      </div>
-      <div class="navigation-buttons">
+        <img src="" alt="">
+        <h3 class="pokemon-name"></h3>
+        <div class="pokemon-types"></div>
+        <div class="pokemon-stats"></div>
+    </div>
+    <div class="navigation-buttons">
         <button id="prev-pokemon">Anterior</button>
         <button id="next-pokemon">Siguiente</button>
     </div>
+</div>
+
+ <!-- Sección de todos los Pokémon -->
+  <div id="list-section" style="display: none;">
+      <div id="loading-message" style="display: none;">Cargando Pokémon...</div>
+      <div class="pokemon-grid"></div> <!-- Contenedor de Pokémon -->
+      <div id="page-info"></div>
+      <button id="prev-page">Anterior</button>
+      <button id="next-page">Siguiente</button>
   </div>
+
+  <section id="most-searched-section" style="display: none;">
+    <h3>Pokémon más buscados:</h3>
+    <div id="most-searched-pokemon" class="pokemon-grid"></div> <!-- Grid de Pokémon más buscados -->
+</section>
+
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script src="./main.js"></script>
 </body>
