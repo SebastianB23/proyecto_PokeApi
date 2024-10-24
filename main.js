@@ -1,10 +1,10 @@
 
-// ----- SECCIÓN DE EVENTOS DE NAVEGACIÓN -----
+
 document.getElementById('search-link').addEventListener('click', function() {
     document.getElementById('search-section').style.display = 'inline-block';
     document.getElementById('list-section').style.display = 'none';
     document.getElementById('most-searched-section').style.display = 'none';
-    getPokemonById(1);  // Cargar el primer Pokémon automáticamente
+    getPokemonById(1);
 });
 
 document.getElementById('list-link').addEventListener('click', function() {
@@ -13,15 +13,15 @@ document.getElementById('list-link').addEventListener('click', function() {
     document.getElementById('most-searched-section').style.display = 'none';
 });
 
-// Evento para mostrar la sección de Pokémon más buscados
+
 document.getElementById('most-searched-link').addEventListener('click', function() {
     document.getElementById('most-searched-section').style.display = 'block';
     document.getElementById('list-section').style.display = 'none';
     document.getElementById('search-section').style.display = 'none';
-    loadMostSearchedPokemon(); // Cargar y mostrar la lista de Pokémon más buscados
+    loadMostSearchedPokemon();
 });
 
-// ----- ELEMENTOS DOM -----
+
 let input = document.querySelector(".container .search-space input");
 let pokemonImg = document.querySelector(".container .info-box img");
 let pokemonName = document.querySelector(".container .info-box .pokemon-name");
@@ -38,13 +38,13 @@ const prevPageBtn = document.getElementById('prev-page');
 const nextPageBtn = document.getElementById('next-page');
 const pageInfo = document.getElementById('page-info');
 
-// ----- VARIABLES GLOBALES -----
-let currentPokemonId = 1; // ID del Pokémon actual
+
+let currentPokemonId = 1;
 let currentPage = 1;
 const pokemonPerPage = 10;
 let totalPokemons = 0;
 
-// ----- OBJETO DE COLORES POR TIPO -----
+
 const typeColor = {
     bug: "#26de81", 
     dragon: "#ffeaa7", 
@@ -64,9 +64,8 @@ const typeColor = {
     water: "#0190FF"
 };
 
-// ----- FUNCIONES PARA OBTENER Y RENDERIZAR POKÉMON -----
-
 // Obtener Pokémon por ID
+
 let getPokemonById = (id) => {
     if (id > 0) { // Evitar ID menor a 1
         let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
@@ -81,6 +80,7 @@ let getPokemonById = (id) => {
 };
 
 // Obtener Pokémon por nombre o ID desde el input
+
 let getPokemon = (pokemon) => {
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemon.toLowerCase()}`;
     fetch(url)
@@ -90,12 +90,12 @@ let getPokemon = (pokemon) => {
         })
         .then((data) => {
             renderPokemons(data);
-            currentPokemonId = data.id;  // Actualizar ID
-            input.value = "";  // Limpiar el input
-
-            // Guardar la búsqueda en localStorage
+            currentPokemonId = data.id;
+            input.value = "";
+           
             saveSearch(pokemon);
         })
+
         .catch((error) => {
             Toastify({
                 text: "Pokemon no encontrado, asegúrate que su nombre esté bien escrito.",
@@ -118,9 +118,8 @@ const getAllPokemons = async (offset = 0, limit = pokemonPerPage) => {
     return data.results; // Lista de Pokémon
 };
 
-// ----- FUNCIONES PARA RENDERIZAR -----
-
 // Renderizar un Pokémon individual
+
 let renderPokemons = (data) => {
     const sprite = data.sprites.other.dream_world.front_default;
     const name = data.name;
@@ -138,7 +137,7 @@ let renderPokemons = (data) => {
 
 // Renderizar lista de Pokémon
 let renderAllPokemon = async (pokemonList) => {
-    allPokemonContainer.innerHTML = '';  // Limpiar el contenedor antes de agregar nuevos Pokémon
+    allPokemonContainer.innerHTML = '';
     
     // Calcular el ID base según la página actual
     const baseId = (currentPage - 1) * pokemonPerPage;
@@ -150,53 +149,48 @@ let renderAllPokemon = async (pokemonList) => {
         pokemonCard.classList.add('pokemon-card');
 
         // Calcular el ID del Pokémon basado en la página actual
-        let pokemonId = baseId + i + 1; // +1 porque el ID comienza en 1
+       
+        let pokemonId = baseId + i + 1;
 
         let pokemonName = document.createElement('h3');
         pokemonName.textContent = `${pokemonId}. ${capitalizeFirstLetter(pokemon.name)}`;
 
-        // Añadir la imagen del Pokémon
         let pokemonImg = document.createElement('img');
         
-        // Hacemos una petición para obtener los detalles del Pokémon, incluida la imagen
         try {
             let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
             let data = await response.json();
-            pokemonImg.src = data.sprites.front_default; // Imagen frontal del Pokémon
+            pokemonImg.src = data.sprites.front_default; 
         } catch (error) {
             console.error('Error al obtener la imagen del Pokémon:', error);
             pokemonImg.alt = 'Imagen no disponible';
         }
 
-        pokemonCard.appendChild(pokemonImg); // Añadir imagen a la tarjeta
-        pokemonCard.appendChild(pokemonName); // Añadir el nombre a la tarjeta
-        allPokemonContainer.appendChild(pokemonCard); // Añadir la tarjeta al contenedor principal
+        pokemonCard.appendChild(pokemonImg); 
+        pokemonCard.appendChild(pokemonName); 
+        allPokemonContainer.appendChild(pokemonCard); 
     }
 };
 
 // Renderizar página de Pokémon
 const renderPokemonPage = async (page = 1) => {
-    // Muestra el mensaje de carga
+    
     document.getElementById('loading-message').style.display = 'block';
-    pokemonGrid.style.display = 'none'; // Oculta la cuadrícula de Pokémon
+    pokemonGrid.style.display = 'none';
 
     const offset = (page - 1) * pokemonPerPage;
     const pokemons = await getAllPokemons(offset);
 
-    // Limpiar el grid antes de agregar los nuevos Pokémon
     pokemonGrid.innerHTML = '';
 
     // Renderizar los Pokémon en la página actual
     await renderAllPokemon(pokemons);
 
-    // Actualizar la información de la página
     pageInfo.textContent = `Página ${page} de ${Math.ceil(totalPokemons / pokemonPerPage)}`;
 
-    // Oculta el mensaje de carga y muestra la cuadrícula
     document.getElementById('loading-message').style.display = 'none';
-    pokemonGrid.style.display = 'grid'; // Muestra la cuadrícula de Pokémon
+    pokemonGrid.style.display = 'grid'; 
 
-    // Habilitar/deshabilitar botones
     prevPageBtn.disabled = page === 1;
     nextPageBtn.disabled = page === Math.ceil(totalPokemons / pokemonPerPage);
 };
@@ -244,14 +238,14 @@ let getPokemonStats = (stats) => {
     });
 };
 
-// ----- EVENTOS -----
+//Eventos
 
-// Buscar Pokémon al presionar Enter
+
 input.addEventListener("keyup", (e) => {
     if (e.key === "Enter") getPokemon(input.value);
 });
 
-// Navegar entre Pokémon
+
 prevButton.addEventListener("click", () => {
     if (currentPokemonId > 1) getPokemonById(currentPokemonId - 1);
 });
@@ -260,10 +254,11 @@ nextButton.addEventListener("click", () => {
     getPokemonById(currentPokemonId + 1);
 });
 
-// Inicializar la lista con la primera página
+
 document.addEventListener('DOMContentLoaded', loadMostSearchedPokemon);
 
-// Paginación
+//Paginación
+
 prevPageBtn.addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage--;
@@ -297,50 +292,48 @@ function saveSearch(pokemon) {
 }
 
 // Cargar y mostrar los Pokémon más buscados con sus imágenes
+
 async function loadMostSearchedPokemon() {
     let searches = JSON.parse(localStorage.getItem('pokemonSearchCounts')) || {};
     
     // Convertir el objeto en un array de [nombre, conteo] y ordenarlo por cantidad de búsquedas
+    
     let sortedSearches = Object.entries(searches).sort((a, b) => b[1] - a[1]);
 
     let searchContainer = document.getElementById('most-searched-pokemon');
-    searchContainer.innerHTML = '';  // Limpiar la lista
+    searchContainer.innerHTML = '';
 
-    // Mostrar solo los primeros 6 resultados
+    
     for (let i = 0; i < Math.min(6, sortedSearches.length); i++) {
         const [pokemon, count] = sortedSearches[i];
 
-        // Crear contenedor de la tarjeta
+        
         let pokemonCard = document.createElement('div');
-        pokemonCard.classList.add('searched-pokemon-card'); // Cambiamos a 'searched-pokemon-card'
+        pokemonCard.classList.add('searched-pokemon-card'); 
 
         // Título con el nombre y conteo de búsquedas
+
         let pokemonName = document.createElement('h3');
         pokemonName.textContent = `${capitalizeFirstLetter(pokemon)} - Buscado ${count} ${count === 1 ? 'vez' : 'veces'}`;
-        pokemonName.classList.add('searched-pokemon-title');  // Clase específica para el título
+        pokemonName.classList.add('searched-pokemon-title');
         pokemonCard.appendChild(pokemonName);
 
         // Crear la imagen del Pokémon
         let pokemonImg = document.createElement('img');
-        pokemonImg.classList.add('searched-pokemon-img'); // Clase específica para la imagen
+        pokemonImg.classList.add('searched-pokemon-img'); 
 
-        // Hacer una solicitud para obtener la imagen de la API
+        
         try {
             let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
             let data = await response.json();
-            pokemonImg.src = data.sprites.front_default;  // Imagen frontal del Pokémon
+            pokemonImg.src = data.sprites.front_default;
         } catch (error) {
             console.error('Error al obtener la imagen del Pokémon:', error);
             pokemonImg.alt = 'Imagen no disponible';
         }
 
-        // Agregar la imagen al contenedor de la tarjeta
         pokemonCard.appendChild(pokemonImg);
-
-        // Permitir hacer clic para buscar ese Pokémon de nuevo
         pokemonCard.addEventListener('click', () => getPokemon(pokemon));
-
-        // Añadir la tarjeta al contenedor principal
         searchContainer.appendChild(pokemonCard);
     }
 }
